@@ -1,0 +1,4 @@
+- divide HTML, CSS, JS
+- add one more calc that calculates compound interest, add a second tub 
+- place all files to static folder in webserver folder and run it with docker compose 
+- find all way how to deploy them in internet (AWS, S3, Cloudfront)
