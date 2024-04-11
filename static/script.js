@@ -6,6 +6,12 @@ function appendInput(value, tab) {
     document.getElementById(`display${tab}`).value += value;
 }
 
+function backspaceInput(tab) {
+    let display = document.getElementById(`display${tab}`);
+    let currentValue = display.value;
+    display.value = currentValue.slice(0, -1); // Remove the last character
+}
+
 function calculate(tab) {
     let expression = document.getElementById(`display${tab}`).value;
     try {
