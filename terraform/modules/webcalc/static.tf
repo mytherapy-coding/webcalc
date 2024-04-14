@@ -46,6 +46,10 @@ locals {
       name = "script.js"
       type = "application/javascript"
     },
+    favicon = {
+      name = "favicon.png"
+      type = "image/png"
+    },
   }
   source_path = "../../../new_static/"
 }
