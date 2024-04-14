@@ -52,7 +52,7 @@ button:hover {
     background-color: #0056b3;
 }
 .tabcontent {
-    display: none;
+    /* display: none; */
     padding: 20px;
     background-color: #fff;
     border-radius: 0 0 5px 5px;

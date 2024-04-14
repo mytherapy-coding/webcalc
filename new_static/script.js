@@ -34,12 +34,12 @@ function calculateCompoundInterest() {
 }
 
 function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+    var i, tab, tablinks;
+    tab = document.getElementsByClassName("tab-pane");
+    for (i = 0; i < tab.length; i++) {
+        tab[i].style.display = "none";
     }
-    tablinks = document.getElementsByClassName("tablinks");
+    tablinks = document.getElementsByClassName("nav-link");
     for (i = 0; i < tablinks.length; i++) {
         // tablinks[i].className = tablinks[i].className.replace(" active", "");
         tablinks[i].classList.remove("active")
