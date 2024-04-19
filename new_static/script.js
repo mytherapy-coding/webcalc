@@ -47,4 +47,5 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "";
     // evt.currentTarget.className += " active";
     evt.currentTarget.classList.add("active")
+    
 }
