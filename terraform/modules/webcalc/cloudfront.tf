@@ -10,6 +10,7 @@ resource "aws_cloudfront_distribution" "webcalc_distribution" {
     origin_access_control_id = aws_cloudfront_origin_access_control.s3_oac.id
   }
 
+
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
