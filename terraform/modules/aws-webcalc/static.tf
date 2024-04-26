@@ -46,7 +46,7 @@ locals {
       type = "image/png"
     },
   }
-  source_path = "../../../new_static/"
+  source_path = "../../../static/"
 }
 
 resource "aws_s3_object" "webcalc" {
