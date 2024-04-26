@@ -24,8 +24,7 @@ resource "aws_cloudfront_distribution" "webcalc_distribution" {
       }
     }
 
-    #viewer_protocol_policy = "redirect-to-https"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
@@ -40,9 +39,12 @@ resource "aws_cloudfront_distribution" "webcalc_distribution" {
   viewer_certificate {
     acm_certificate_arn = data.aws_acm_certificate.my_certificate.arn
     ssl_support_method  = "sni-only"
-    
   }
-  aliases = ["webcalc.alenak.xyz", "wwww.webcalc.alenak.xyz"]
+
+  aliases = [
+    data.aws_acm_certificate.my_certificate.domain,
+    join(".", ["www", data.aws_acm_certificate.my_certificate.domain])
+  ]
 }
 
 data "aws_iam_policy_document" "allow_access" {
@@ -60,7 +62,7 @@ data "aws_iam_policy_document" "allow_access" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values   = ["${aws_cloudfront_distribution.webcalc_distribution.arn}"]
+      values   = [aws_cloudfront_distribution.webcalc_distribution.arn]
     }
   }
 }
