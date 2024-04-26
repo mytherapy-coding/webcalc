@@ -24,7 +24,8 @@ resource "aws_cloudfront_distribution" "webcalc_distribution" {
       }
     }
 
-    viewer_protocol_policy = "redirect-to-https"
+    #viewer_protocol_policy = "redirect-to-https"
+    viewer_protocol_policy = "allow-all"
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
@@ -39,7 +40,9 @@ resource "aws_cloudfront_distribution" "webcalc_distribution" {
   viewer_certificate {
     acm_certificate_arn = data.aws_acm_certificate.my_certificate.arn
     ssl_support_method  = "sni-only"
+    
   }
+  aliases = ["webcalc.alenak.xyz", "wwww.webcalc.alenak.xyz"]
 }
 
 data "aws_iam_policy_document" "allow_access" {
