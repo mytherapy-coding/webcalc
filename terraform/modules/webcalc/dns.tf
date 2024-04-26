@@ -14,3 +14,11 @@ resource "aws_route53_record" "webcalc_cname" {
   ttl     = 300
   records = [aws_cloudfront_distribution.webcalc_distribution.domain_name]
 }
+
+resource "aws_route53_record" "www_webcalc_cname" {
+  zone_id = data.aws_route53_zone.my_zone.id
+  name    = join(".", ["www", data.aws_acm_certificate.my_certificate.domain])
+  type    = "CNAME"
+  ttl     = 300
+  records = [aws_cloudfront_distribution.webcalc_distribution.domain_name]
+}
