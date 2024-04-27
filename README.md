@@ -23,3 +23,13 @@ curl -X GET \
 ```
 
 
+This command will overwrite reqs.txt with a list of all installed packages and their versions
+```sh
+pip freeze > reqs.txt
+```
+
+build a Docker image named webcalc from the current directory 
+```sh
+docker buildx build -t mywebcalc .
+```
+

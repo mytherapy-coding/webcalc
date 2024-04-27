@@ -5,6 +5,20 @@ import string
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from sqlitedict import SqliteDict
+
+# Create a SqliteDict object
+db = SqliteDict("mydata.sqlite", autocommit=True)
+
+# Store data
+db['key1'] = 'value1'
+db['key2'] = {'nested': 'value'}
+
+# Retrieve data
+print(db['key1'])  # Output: 'value1'
+
+# Close the SqliteDict connection
+db.close()
 
 
 def load_mappings() -> dict[str, str]:
