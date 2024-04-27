@@ -1,5 +1,3 @@
-import json
-import os
 import random
 import string
 from fastapi import FastAPI, HTTPException
@@ -11,10 +9,6 @@ app = FastAPI()
 
 # Initialize a SqliteDict instance for data storage
 content_store = SqliteDict("mydata.sqlite", autocommit=True)
-
-# Load existing URL mappings from a JSON file (not needed with SqliteDict)
-
-# Save URL mappings to a JSON file (not needed with SqliteDict)
 
 # Generate a random short URL
 def generate_short_url(length: int = 6) -> str:
