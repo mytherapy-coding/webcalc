@@ -1,13 +1,36 @@
+
+import random
+import string
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from sqlitedict import SqliteDict
-import string
-import random
 
 app = FastAPI()
 
-# Initialize a SqliteDict instance for data storage
 content_store = SqliteDict("mydata.sqlite", autocommit=True)
+
+def generate_short_url(length: int = 6) -> str:
+    characters = string.ascii_letters + string.digits
+    short_url = "".join(random.choice(characters) for _ in range(length))
+    return short_url
+
+class ContentRequest(BaseModel):
+    content: str
+
+class ShortURLResponse(BaseModel):
+    id: str
+
+@app.post("/api/save", response_model=ShortURLResponse)
+def save_content(content_req: ContentRequest):
+    short_url = generate_short_url()
+    content_store[short_url] = content_req.content
+    return {"id": short_url}
+
+@app.get("/api/{short_url}")
+def get_content(short_url: str):
+    if short_url not in content_store:
+        raise HTTPException(status_code=404, detail="ID not found")
+    return content_store[short_url]
 
 class ShareRequest(BaseModel):
     expression: str
@@ -15,7 +38,8 @@ class ShareRequest(BaseModel):
 class ShareResponse(BaseModel):
     short_url: str
 
-@app.post("/api/share", response_model=ShareResponse)
+
+@app.post("/api/share", response_model=ShareRequest)
 def share_expression(share_req: ShareRequest):
     try:
         # Evaluate the expression
@@ -34,6 +58,9 @@ def share_expression(share_req: ShareRequest):
         # If an error occurs during evaluation, return an error response
         raise HTTPException(status_code=400, detail=str(e))
 
+
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="localhost", port=5000)
+    uvicorn.run(app, host="0.0.0.0", port=10000)
+

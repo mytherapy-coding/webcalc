@@ -31,7 +31,7 @@ async function shareExpression(tab) {
     let expression = document.getElementById(`display${tab}`).value;
 
     try {
-        const response = await fetch('http://localhost:5000/api/share', {
+        const response = await fetch('http://localhost:10000/api/share', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
