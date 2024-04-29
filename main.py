@@ -4,8 +4,20 @@ import string
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from sqlitedict import SqliteDict
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
 
 content_store = SqliteDict("mydata.sqlite", autocommit=True)
 
@@ -18,13 +30,13 @@ class ContentRequest(BaseModel):
     content: str
 
 class ShortURLResponse(BaseModel):
-    id: str
+    short_url: str
 
 @app.post("/api/save", response_model=ShortURLResponse)
 def save_content(content_req: ContentRequest):
     short_url = generate_short_url()
     content_store[short_url] = content_req.content
-    return {"id": short_url}
+    return {"short_url": short_url}
 
 @app.get("/api/{short_url}")
 def get_content(short_url: str):
@@ -35,3 +47,5 @@ def get_content(short_url: str):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=10000)
+
+

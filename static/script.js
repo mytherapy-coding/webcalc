@@ -36,14 +36,18 @@ async function shareExpression(tab) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ expression })
+            body: JSON.stringify({ "content": expression })
+
         });
 
         const data = await response.json();
+        console.log(data)
+        console.log("hello")
+
         if (tab === 1) {
-            document.getElementById('shareResult1').textContent = `Short URL: ${data.short_url}`;
+            document.getElementById('shareResult1').textContent = `Short URL: http://localhost:10000/api/${data.short_url}`;
         } else if (tab === 2) {
-            document.getElementById('shareResult2').textContent = `Short URL: ${data.short_url}`;
+            document.getElementById('shareResult2').textContent = `Short URL: http://localhost:10000/api/${data.short_url}`;
         }
     } catch (error) {
         console.error('Failed to share expression:', error);
@@ -81,3 +85,5 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "";
     evt.currentTarget.classList.add("active")
 }
+
+
