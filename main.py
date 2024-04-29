@@ -32,35 +32,6 @@ def get_content(short_url: str):
         raise HTTPException(status_code=404, detail="ID not found")
     return content_store[short_url]
 
-class ShareRequest(BaseModel):
-    expression: str
-
-class ShareResponse(BaseModel):
-    short_url: str
-
-
-@app.post("/api/share", response_model=ShareRequest)
-def share_expression(share_req: ShareRequest):
-    try:
-        # Evaluate the expression
-        result = eval(share_req.expression)
-
-        # Generate short URL (for simplicity, using random characters)
-        short_url = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
-
-        # Store the result in the content store using the short URL
-        content_store[short_url] = result
-
-        # Return the short URL as the response
-        return {"short_url": short_url}
-
-    except Exception as e:
-        # If an error occurs during evaluation, return an error response
-        raise HTTPException(status_code=400, detail=str(e))
-
-
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=10000)
-
