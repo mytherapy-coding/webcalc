@@ -48,7 +48,7 @@
           <button onclick="appendInput('0', 1)" class="btn btn-light">0</button>
           <button onclick="appendInput('.', 1)" class="btn btn-light">.</button>
           <button onclick="calculate(1)" class="btn btn-success">=</button>
-          <button onclick="appendInput('+', 1)" class="btn btn-primary">+</button>
+          <button onclick="shareExpression(1)" class="btn btn-info">Share</button> <!-- Added Share button for Arithmetic -->
         </div>
       </div>
     </div>
@@ -60,12 +60,11 @@
         <input type="text" id="time" class="form-control" placeholder="Time Period (Years)">
         <button onclick="calculateCompoundInterest()" class="btn btn-primary">Calculate</button>
         <div id="compoundInterestResult"></div>
+        <button onclick="shareExpression(2)" class="btn btn-info">Share</button> <!-- Added Share button for Compound Interest -->
       </div>
     </div>
   </div>
 </div>
-
-
 
 <script src="script.js"></script>
 </body>
