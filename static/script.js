@@ -28,36 +28,54 @@ function calculate(tab) {
 
 // Function to share expression based on the active tab
 async function shareExpression(tab) {
-    let expression = document.getElementById(`display${tab}`).value;
+    if (tab === 1) {
+        let expression = document.getElementById(`display${tab}`).value;
 
-    try {
-        const response = await fetch('http://localhost:10000/api/save', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ "content": expression })
+        try {
+            const response = await fetch('http://localhost:10000/api/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "content": expression })
+            });
 
-        });
-
-        const data = await response.json();
-        console.log(data)
-        console.log("hello")
-
-        if (tab === 1) {
-            document.getElementById('shareResult1').textContent = `Short URL: http://localhost:10000/api/${data.short_url}`;
-        } else if (tab === 2) {
-            document.getElementById('shareResult2').textContent = `Short URL: http://localhost:10000/api/${data.short_url}`;
-        }
-    } catch (error) {
-        console.error('Failed to share expression:', error);
-        if (tab === 1) {
+            const data = await response.json();
+            const shortUrl = `http://localhost:10000/api/${data.short_url}`;
+            document.getElementById('shareResult1').textContent = `Short URL: ${shortUrl}`;
+        } catch (error) {
+            console.error('Failed to share expression:', error);
             document.getElementById('shareResult1').textContent = 'Failed to share expression. Please try again.';
-        } else if (tab === 2) {
+        }
+    } else if (tab === 2) {
+        let principal = parseFloat(document.getElementById('principal').value);
+        let rate = parseFloat(document.getElementById('rate').value);
+        let time = parseFloat(document.getElementById('time').value);
+
+        if (isNaN(principal) || isNaN(rate) || isNaN(time)) {
+            document.getElementById('compoundInterestResult').textContent = 'Invalid input. Please enter numeric values.';
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:10000/api/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "content": `Principal: ${principal}, Rate: ${rate}, Time: ${time}` })
+            });
+
+            const data = await response.json();
+            const shortUrl = `http://localhost:10000/api/${data.short_url}`;
+            document.getElementById('shareResult2').textContent = `Short URL: ${shortUrl}`;
+        } catch (error) {
+            console.error('Failed to share expression:', error);
             document.getElementById('shareResult2').textContent = 'Failed to share expression. Please try again.';
         }
     }
 }
+
 
 // Function to calculate compound interest and display result
 function calculateCompoundInterest() {
