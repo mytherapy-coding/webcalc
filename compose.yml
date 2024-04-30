@@ -7,10 +7,10 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "10000:10000"
     volumes:
       - ./main.py:/app/main.py
       - ./reqs.txt:/app/reqs.txt
     environment:
       - PYTHONUNBUFFERED=1
-    command: ["python", "main.py"]
+    command: ["uvicorn", "main:app", "--reload", "--port", "10000"]
