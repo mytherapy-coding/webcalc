@@ -28,11 +28,12 @@ function calculate(tab) {
 
 // Function to share expression based on the active tab
 async function shareExpression(tab) {
+    url = 'http://localhost:10000/api/save'
     if (tab === 1) {
         let expression = document.getElementById(`display${tab}`).value;
 
         try {
-            const response = await fetch('http://localhost:10000/api/save', {
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -58,7 +59,7 @@ async function shareExpression(tab) {
         }
 
         try {
-            const response = await fetch('http://localhost:10000/api/save', {
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

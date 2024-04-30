@@ -19,6 +19,12 @@ app.add_middleware(
 )
 
 
+# Health check API endpoint
+@app.get("/api/health")
+def health_check():
+    return {"status": "ok", "message": "Application is healthy"}
+
+
 content_store = SqliteDict("mydata.sqlite", autocommit=True)
 
 def generate_short_url(length: int = 6) -> str:
@@ -30,7 +36,7 @@ class ContentRequest(BaseModel):
     content: str
 
 class ShortURLResponse(BaseModel):
-    short_url: str
+    sh: str
 
 @app.post("/api/save", response_model=ShortURLResponse)
 def save_content(content_req: ContentRequest):
