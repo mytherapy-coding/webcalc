@@ -1,3 +1,4 @@
+### List the contents of an Amazon S3 bucket 
 ```sh
 aws s3 ls static-webcalc-2
 ```
@@ -14,12 +15,18 @@ test:
 curl -X POST \
   -H "Content-Type: application/json" \
   -d '{"content": "2+5=7"}' \
-  http://localhost:8000/api/save
+  http://localhost:10000/api/save
 ```
 
 ```sh
 curl -X GET \
-  http://localhost:8000/api/{short_url_id}
+  http://localhost:10000/api/{short_url_id}
+```
+
+
+```sh
+curl -X GET \
+  http://localhost:10000/api/health
 ```
 
 
@@ -28,8 +35,36 @@ This command will overwrite reqs.txt with a list of all installed packages and t
 pip freeze > reqs.txt
 ```
 
-build a Docker image named webcalc from the current directory 
+### Build a Docker image named webcalc from the current directory 
+
 ```sh
-docker buildx build -t mywebcalc .
+docker-compose build
+```
+
+```sh
+docker buildx build -t webcalc .
+```
+
+```sh
+docker run -d webcalc
+```
+
+```sh
+docker ps
+```
+
+```sh
+docker images
+```
+
+
+### Build abd deploy 
+
+push to DockerHub
+
+```sh
+docker tag webcalc mytherapycoding/webcalc:latest
+docker login
+docker push mytherapycoding/webcalc:latest
 ```
 
