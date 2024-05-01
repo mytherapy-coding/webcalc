@@ -63,8 +63,8 @@ docker images
 push to DockerHub
 
 ```sh
-docker tag webcalc mytherapycoding/webcalc:latest
+docker tag webcalc mytherapycoding/webcalc:1
 docker login
-docker push mytherapycoding/webcalc:latest
+docker push mytherapycoding/webcalc:1
 ```
 
