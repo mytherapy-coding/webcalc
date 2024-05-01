@@ -8,15 +8,15 @@ resource "aws_ecs_task_definition" "webcalc_task_definition" {
   family                   = "webcalc-task"
   execution_role_arn       = aws_iam_role.task_execution_role.arn
   network_mode             = "awsvpc"
-  cpu                      = "256" # CPU units (e.g., 256 = 0.25 vCPU)
-  memory                   = "512" # Memory in MiB
+  cpu                      = "512"  # CPU units (e.g., 256 = 0.25 vCPU)
+  memory                   = "2048" # Memory in MiB
   requires_compatibilities = ["FARGATE"]
   container_definitions = jsonencode([
     {
       name      = "webcalc-container"
-      image     = "mytherapycoding/webcalc:latest"
-      cpu       = 256
-      memory    = 512
+      image     = "docker.io/mytherapycoding/webcalc:latest"
+      cpu       = 512
+      memory    = 2048
       essential = true
       command   = ["uvicorn", "main:app", "--reload", "--port", "80"]
       # Port mappings
@@ -42,7 +42,7 @@ resource "aws_ecs_task_definition" "webcalc_task_definition" {
         options = {
           "awslogs-group"         = "/ecs/webcalc-logs" # CloudWatch Logs group name
           "awslogs-region"        = "us-east-1"         # AWS region for CloudWatch Logs
-          "awslogs-stream-prefix" = "webcalc" # Log stream prefix
+          "awslogs-stream-prefix" = "webcalc"           # Log stream prefix
         }
       }
     }
@@ -61,12 +61,13 @@ resource "aws_ecs_service" "webcalc_service" {
   # Add additional service configurations here...
 
   network_configuration {
-    subnets          = [
-      aws_subnet.private_subnet.id, 
-      aws_subnet.public_subnet.id ]  # Specify private subnet
-    
+    subnets = [
+      aws_subnet.private_subnet.id,
+      aws_subnet.public_subnet.id
+    ]
+
     security_groups  = [aws_security_group.ecs_security_group.id]
-    assign_public_ip = true  # Set to "ENABLED" if public IP is needed
+    assign_public_ip = true
   }
 }
 

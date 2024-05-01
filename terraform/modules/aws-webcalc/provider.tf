@@ -1,9 +1,12 @@
-provider "aws" {
-  # Required: The region where your AWS resources reside
-  region = "us-east-1"
-
-  # Optional: Configure the S3 endpoint (if using a custom endpoint)
-  # s3_endpoint = "https://s3.custom.com"  # Example for a custom endpoint
-
-  # Credentials are not set explicitly here (security best practice)
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.44" # Update to match the locked version
+    }
+    # docker = {
+    #   source  = "kreuzwerker/docker"
+    #   version = ">= 2.0, < 3.0"  # Specify a version constraint
+    # }
+  }
 }

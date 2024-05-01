@@ -62,3 +62,13 @@ resource "aws_route_table_association" "subnet_public_a" {
   route_table_id = aws_route_table.public.id
 }
 
+resource "aws_ecs_cluster_capacity_providers" "webcalc_cluster" {
+  cluster_name       = aws_ecs_cluster.webcalc_cluster.name
+  capacity_providers = ["FARGATE"]
+
+  default_capacity_provider_strategy {
+    base              = 1
+    weight            = 100
+    capacity_provider = "FARGATE"
+  }
+}
