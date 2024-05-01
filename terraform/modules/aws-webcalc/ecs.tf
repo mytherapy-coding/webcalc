@@ -61,8 +61,16 @@ resource "aws_ecs_service" "webcalc_service" {
   # Add additional service configurations here...
 
   network_configuration {
-    subnets          = [aws_subnet.private_subnet.id]  # Specify private subnet
+    subnets          = [
+      aws_subnet.private_subnet.id, 
+      aws_subnet.public_subnet.id ]  # Specify private subnet
+    
     security_groups  = [aws_security_group.ecs_security_group.id]
-    # assign_public_ip = "DISABLED"  # Set to "ENABLED" if public IP is needed
+    assign_public_ip = true  # Set to "ENABLED" if public IP is needed
   }
 }
+
+resource "aws_cloudwatch_log_group" "webcalc_logs" {
+  name = "/ecs/webcalc-logs"
+}
+
