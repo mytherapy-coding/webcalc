@@ -28,7 +28,7 @@ function calculate(tab) {
 
 // Function to share expression based on the active tab
 async function shareExpression(tab) {
-    let url = 'http://localhost:10000';
+    let url = '';
     let message;
     let shareResult;
     if (tab === 1) {
