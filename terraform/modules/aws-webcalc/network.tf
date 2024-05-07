@@ -16,9 +16,17 @@ resource "aws_subnet" "public_subnet" {
   depends_on = [aws_internet_gateway.main_igw]
 }
 
-resource "aws_subnet" "private_subnet" {
+resource "aws_subnet" "public_subnet_b" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = "10.0.2.0/24"
+  availability_zone = "us-east-1b" # Specify the desired AZ
+  # Specify dependency on the VPC and IGW
+  depends_on = [aws_internet_gateway.main_igw]
+}
+
+resource "aws_subnet" "private_subnet" {
+  vpc_id            = aws_vpc.my_vpc.id
+  cidr_block        = "10.0.3.0/24"
   availability_zone = "us-east-1a" # Specify the desired AZ
 }
 
@@ -59,6 +67,11 @@ resource "aws_route" "route_to_internet_gateway" {
 
 resource "aws_route_table_association" "subnet_public_a" {
   subnet_id      = aws_subnet.public_subnet.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "subnet_public_b" {
+  subnet_id      = aws_subnet.public_subnet_b.id
   route_table_id = aws_route_table.public.id
 }
 

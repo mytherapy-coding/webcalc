@@ -62,8 +62,8 @@ resource "aws_ecs_service" "webcalc_service" {
 
   network_configuration {
     subnets = [
-      aws_subnet.private_subnet.id,
-      aws_subnet.public_subnet.id
+      aws_subnet.public_subnet.id,
+      aws_subnet.public_subnet_b.id
     ]
 
     security_groups  = [aws_security_group.ecs_security_group.id]
