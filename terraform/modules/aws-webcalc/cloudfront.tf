@@ -111,6 +111,7 @@ resource "aws_s3_bucket_policy" "allow_access" {
 }
 
 
+
 resource "aws_cloudfront_origin_access_control" "s3_oac" {
   name                              = "example-s3-oac"
   description                       = "AOC Policy"
