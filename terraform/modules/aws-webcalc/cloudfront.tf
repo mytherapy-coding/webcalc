@@ -36,6 +36,7 @@ resource "aws_cloudfront_distribution" "webcalc_distribution" {
         forward = "none"
       }
     }
+    
 
     # Define allowed and cached methods for default cache behavior
     allowed_methods = ["GET", "HEAD", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"]
